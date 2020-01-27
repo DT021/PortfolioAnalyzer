@@ -19,5 +19,4 @@ class NaiveBackTest:
             )
         )
         historical_series = np.cumsum(log_data)
-        self.data["portfolio"] = np.exp(historical_series) * capital
-        return self.data
+        return np.exp(historical_series) * capital
