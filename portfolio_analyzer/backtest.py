@@ -19,4 +19,4 @@ class NaiveBackTest:
             )
         )
         historical_series = np.cumsum(log_data)
-        return np.exp(historical_series) * capital
+        return (np.exp(historical_series) * capital).to_frame()
