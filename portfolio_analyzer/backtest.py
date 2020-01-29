@@ -7,7 +7,7 @@ class NaiveBackTest:
     def __init__(self, tickers_ratio, data):
         self.tickers_ratio = tickers_ratio
         self.tickers = tickers_ratio.keys()
-        self.weights = tickers_ratio.values()
+        self.weights = np.array(tickers_ratio.values())
         self.data = data
 
     def run(self, capital=100.0):

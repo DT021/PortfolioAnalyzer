@@ -21,6 +21,7 @@ class MainMetrics:
         main_metrics["benchmark correlation"] = self.__market_corr(data)
         main_metrics["alpha"] = self.__alpha(data)
         main_metrics["sharpe ratio"] = self.__sharpe_ratio(data)
+        main_metrics["max draw down"] = self.__max_drawdown(data)
         return main_metrics
 
     def __market_corr(self, data):
@@ -43,3 +44,12 @@ class MainMetrics:
         mu = np.mean(return_data).values[0]
         std = np.std(return_data).values[0]
         return mu / std
+
+    def __max_drawdown(self, data):
+        prev_high = 0.0
+        max_draw = 0.0
+        for index, value in data.itertuples():
+            prev_high = max(prev_high, value)
+            dd = (value - prev_high) / prev_high
+            max_draw = min(max_draw, dd)
+        return max_draw
