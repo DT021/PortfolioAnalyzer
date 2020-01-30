@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from sklearn.linear_model import RANSACRegressor
+import statsmodels.api as sm
+from statsmodels import regression
 
 
 class MainMetrics:
@@ -9,7 +10,6 @@ class MainMetrics:
     def __init__(self, benchmark):
         self.benchmark = benchmark
         self.benchmark.columns = ["benchmark"]
-        self.ransac = RANSACRegressor()
 
     def estimate(self, data):
         """Perform the estimation of the metrics for every asset in data."""
@@ -47,15 +47,14 @@ class MainMetrics:
         ).dropna()
         columns = set(pct_change_df.columns)
         asset_name = list(columns.difference(["benchmark"]))[0]
-        self.ransac.fit(
-            pct_change_df["benchmark"].values.reshape(-1, 1),
-            pct_change_df[asset_name].values.reshape(-1, 1),
-        )
-        alpha = self.ransac.predict(np.array([[0]]))[0][0]
-        beta = (np.mean(pct_change_df[asset_name].values) - alpha) / np.mean(
-            pct_change_df["benchmark"].values
-        )
-        return alpha, beta
+        x = pct_change_df["benchmark"].values
+        y = pct_change_df[asset_name].values
+
+        x = sm.add_constant(x)
+        model = regression.linear_model.OLS(y, x).fit()
+        alpha = model.params[0]
+        beta = model.params[1]
+        return alpha * self.__event_frequency(data), beta
 
     @staticmethod
     def __sharpe_ratio(data):
