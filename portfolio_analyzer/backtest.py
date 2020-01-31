@@ -45,7 +45,7 @@ class OutOfSampleBackTest:
                     self.portfolio_optimization(pd.concat(data_splits[:i]))
                 )
                 backtest = NaiveBackTest(my_portfolio, data_splits[i + 1])
-                out_of_samples_performance.append(backtest.run().pct_change().dropna())
+                out_of_samples_performance.append(backtest.run().pct_change().fillna(0))
 
         elif self.method == "equal-blocks":
             for i in range(self.splits)[:-1]:
@@ -53,7 +53,7 @@ class OutOfSampleBackTest:
                     self.portfolio_optimization(data_splits[i])
                 )
                 backtest = NaiveBackTest(my_portfolio, data_splits[i + 1])
-                out_of_samples_performance.append(backtest.run().pct_change().dropna())
+                out_of_samples_performance.append(backtest.run().pct_change().fillna(0))
 
         else:
             print(
