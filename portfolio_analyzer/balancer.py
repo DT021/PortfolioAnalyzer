@@ -22,7 +22,7 @@ class Rebalance:
 
     def _normalize_weights(self, weights):
         """Define and internal method."""
-        norm_factor = np.sum(weights.values())
+        norm_factor = np.sum(np.array(list(weights.values())))
         for key in weights.keys():
             weights[key] = weights[key] / norm_factor
         return weights

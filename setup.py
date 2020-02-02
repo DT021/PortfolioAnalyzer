@@ -12,7 +12,14 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://https://github.com/Tokukawa/PortfolioAnalyzer",
-    install_requires=["sklearn", "matplotlib", "pandas", "yahoofinancials"],
+    install_requires=[
+        "sklearn",
+        "matplotlib",
+        "pandas",
+        "yahoofinancials",
+        "cvxopt",
+        "statsmodels  ",
+    ],
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

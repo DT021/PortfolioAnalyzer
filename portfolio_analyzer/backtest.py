@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-from utils import portfolio2dic
+
+from .utils import portfolio2dic
 
 
 class NaiveBackTest:
@@ -9,7 +10,7 @@ class NaiveBackTest:
     def __init__(self, tickers_ratio, data):
         self.tickers_ratio = tickers_ratio
         self.tickers = tickers_ratio.keys()
-        self.weights = np.array(tickers_ratio.values())
+        self.weights = np.array(list(tickers_ratio.values()))
         self.data = data
 
     def run(self, capital=100.0):
