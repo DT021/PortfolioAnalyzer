@@ -157,7 +157,7 @@ def l1filter(df, delta=1.0e-1, remove_outliers=False, mad_factor=3, print_test=F
             print("Augmented Dickey-Fuller Test Results for {}:".format(k))
             print(dfResults)
 
-        test_results[k] = dfResults.to_frame()
+        test_results[k] = dfResults.to_frame(name=k)
     if remove_outliers:
         results = np.exp(
             pd.concat(
